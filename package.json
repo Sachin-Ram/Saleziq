@@ -1,0 +1,19 @@
+{
+  "name": "salesiq-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "api": "^6.1.1",
+    "axios": "^1.6.2",
+    "express": "^4.18.2",
+    "indian-rail-api": "^2.0.5",
+    "node-fetch": "^3.3.2",
+    "request": "^2.88.2"
+  }
+}
