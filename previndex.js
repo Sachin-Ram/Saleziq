@@ -1,37 +1,63 @@
 const express = require('express');
-const app = express();
+const bodyParser = require('body-parser');
 const sdk = require('api')('@fsq-developer/v1.0#18rps1flohmmndw');
-const request = require('request');
-const axios = require('axios');
+const morgan = require('morgan');
+const latlong = require('./latlong.js');
 const trainHandler = require('./trainHandler');
 const hotelOptions = require('./hotel');
-const latlong=require('./latlong.js');
 
-// const getLocationDetails = async (locationName) => {
-//   const options = {
-//     method: 'GET',
-//     url: 'https://trueway-geocoding.p.rapidapi.com/Geocode',
-//     qs: {
-//       address: locationName,
-//       language: 'en'
-//     },
-//     headers: {
-//       'X-RapidAPI-Key': '1fbcf9b118msh84d98293e865e42p1037e2jsn3f13e701b396',
-//       'X-RapidAPI-Host': 'trueway-geocoding.p.rapidapi.com'
-//     }
-//   };
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-//   return new Promise((resolve, reject) => {
-//     request(options, function (error, response, body) {
-//       if (error) {
-//         reject(error);
-//       } else {
-//         const locationData = JSON.parse(body).results[0].location;
-//         resolve(locationData);
-//       }
-//     });
-//   });
-// };
+let expenses = [];
+
+// Use morgan middleware for request logging
+app.use(morgan('dev'));
+app.use(bodyParser.json());
+
+// Expenses App Routes
+app.get('/expenses', (req, res) => {
+    res.json(expenses);
+});
+
+app.post('/expenses', (req, res) => {
+    console.log(req.headers);
+    // Obtain the totalAmount from request headers
+    const totalAmount = req.headers['totalamount']; // Adjust the header key as needed
+
+    if (!totalAmount || isNaN(totalAmount) || totalAmount <= 0) {
+        return res.status(400).json({ error: 'Invalid total amount' });
+    }
+
+    const foodPercentage = 0.5;
+    const utilitiesPercentage = 0.3;
+    const entertainmentPercentage = 0.2;
+
+    const foodAmount = totalAmount * foodPercentage;
+    const utilitiesAmount = totalAmount * utilitiesPercentage;
+    const entertainmentAmount = totalAmount * entertainmentPercentage;
+
+    const newExpense = {
+        id: expenses.length + 1,
+        totalAmount,
+        distribution: {
+            food: foodAmount,
+            utilities: utilitiesAmount,
+            entertainment: entertainmentAmount,
+        },
+        date: new Date().toISOString(),
+    };
+
+    expenses.push(newExpense);
+
+    // Return only the food, utilities, and entertainment amounts in the response
+    res.status(201).json({
+        foodAmount,
+        utilitiesAmount,
+        entertainmentAmount,
+    });
+});
+
 
 const fetchData = async (locationName, spot) => {
   try {
@@ -82,63 +108,62 @@ const fetchDetails = async (fsqId) => {
   }
 };
 
+// Location App Routes
 app.post('/', async (req, res) => {
-  try {
-    const locationName = req.headers.location;
-    const spot = req.headers.spot;
-    console.log(spot);
-    const fsqIds = await fetchData(locationName, spot);
-    const detailsPromises = fsqIds.map(fsqId => fetchDetails(fsqId));
-    const details = await Promise.all(detailsPromises);
-    return res.status(200).json(details);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).send('Internal Server Error');
-  }
+    try {
+        const locationName = req.headers.location;
+        const spot = req.headers.spot;
+        console.log(spot);
+        const fsqIds = await fetchData(locationName, spot);
+        const detailsPromises = fsqIds.map(fsqId => fetchDetails(fsqId));
+        const details = await Promise.all(detailsPromises);
+        return res.status(200).json(details);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Internal Server Error');
+    }
 });
 
 app.post('/recommend', async (req, res) => {
-  try {
-    const locationName = req.headers.location;
-    const spot = req.headers.spot;
-    console.log('Received Recommendation Request for Location:', locationName, 'and Spot:', spot);
-    const fsqIds = await fetchData(locationName, spot);
-    const detailsPromises = fsqIds.map(fsqId => fetchDetails(fsqId));
-    const details = await Promise.all(detailsPromises);
-    return res.status(200).json(details);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).send('Internal Server Error');
-  }
+    try {
+        const locationName = req.headers.location;
+        const spot = req.headers.spot;
+        console.log('Received Recommendation Request for Location:', locationName, 'and Spot:', spot);
+        const fsqIds = await fetchData(locationName, spot);
+        const detailsPromises = fsqIds.map(fsqId => fetchDetails(fsqId));
+        const details = await Promise.all(detailsPromises);
+        return res.status(200).json(details);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Internal Server Error');
+    }
 });
 
 app.post('/train', async (req, res) => {
-  try {
-    const locationName = req.headers.location;
-    const trainData = await trainHandler.fetchTrainData(locationName);
-    res.status(200).json(trainData);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Internal Server Error');
-  }
+    try {
+        const locationName = req.headers.location;
+        const trainData = await trainHandler.fetchTrainData(locationName);
+        res.status(200).json(trainData);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 app.post('/hotel', async (req, res) => {
-  try {
-    const locationName=req.headers.location;
-    // const arrivalDate = req.headers.arrivaldate;
-    // const departureDate = req.headers.departuredate; 
-    const hotelData = await hotelOptions.fetchHotelData(locationName);
-    return res.status(200).json(hotelData);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).send('Internal Server Error');
-  }
+    try {
+        console.log(req.headers);
+        const locationName = req.headers.location;
+        const arrivalDate = req.headers.arrival_date;
+        const departureDate = req.headers.departure_date;
+        const hotelData = await hotelOptions.fetchHotelData(locationName, arrivalDate, departureDate);
+        return res.status(200).json(hotelData);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Internal Server Error');
+    }
 });
 
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
-
-

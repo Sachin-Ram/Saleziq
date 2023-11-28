@@ -8,7 +8,7 @@ const fetchTrainData = async (location) => {
     url: 'https://trains.p.rapidapi.com/',
     headers: {
       'content-type': 'application/json',
-      'X-RapidAPI-Key': '1fbcf9b118msh84d98293e865e42p1037e2jsn3f13e701b396',
+      'X-RapidAPI-Key': '74a10f177emsh9fedb666587660fp12cd30jsn3145991e3f11',
       'X-RapidAPI-Host': 'trains.p.rapidapi.com'
     },
     data: { search: location }
