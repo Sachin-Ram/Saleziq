@@ -23,7 +23,7 @@ const fetchHotelData = async (locationName,arrivalDate,departureDate) => {
         currency_code: 'EUR'
       },
       headers: {
-        'X-RapidAPI-Key': '1fbcf9b118msh84d98293e865e42p1037e2jsn3f13e701b396', // Replace with your actual key
+        'X-RapidAPI-Key': '74a10f177emsh9fedb666587660fp12cd30jsn3145991e3f11', // Replace with your actual key
         'X-RapidAPI-Host': 'booking-com15.p.rapidapi.com'
       }
     };
