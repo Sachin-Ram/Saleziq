@@ -5,9 +5,13 @@ const morgan = require('morgan');
 const latlong = require('./latlong.js');
 const trainHandler = require('./trainHandler');
 const hotelOptions = require('./hotel');
+const stationcodes=require('./test.js');
+const axios = require('axios');
+const fs = require('fs');
+const trainService=require('./trainfetch.js');
 
 const app = express();
-const PORT = process.env.PORT ||3000;
+const PORT = process.env.PORT || 3000;
 
 let expenses = [];
 
@@ -162,6 +166,40 @@ app.post('/hotel', async (req, res) => {
         console.error(err);
         return res.status(500).send('Internal Server Error');
     }
+});
+
+app.post('/traindetails', async (req, res) => {
+  try {
+    console.log(req.headers);
+    const fromstation = req.headers.fromstation;
+    const tostation = req.headers.tostation;
+    const dateofJourney=req.headers.traveldate;//yyyy-mm-dd
+    // console.log(arrivalstation);
+    // console.log(departurestation);
+    const fromstationCode1 = stationcodes.getStationCodeByStationName(fromstation);
+    const tostationCode2 = stationcodes.getStationCodeByStationName(tostation);
+
+    if (fromstationCode1 && tostationCode2) {
+      console.log(`Station Code for ${fromstation}: ${fromstationCode1}`);
+      console.log(`Station Code for ${tostation}: ${tostationCode2}`);
+
+      
+
+      // Call the new function to fetch train details
+      const trainDetails = await trainService.fetchTrainDetails(fromstationCode1, tostationCode2, dateofJourney);
+
+      console.log(trainDetails);
+
+      // Return the train details to the client
+      res.status(200).json(trainDetails);
+    } else {
+      console.log("Station not found:");
+      res.status(404).json({ error: 'Station not found' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 app.listen(PORT, () => {
