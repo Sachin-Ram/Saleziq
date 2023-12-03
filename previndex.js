@@ -4,7 +4,7 @@ const sdk = require('api')('@fsq-developer/v1.0#18rps1flohmmndw');
 const morgan = require('morgan');
 const latlong = require('./latlong.js');
 const trainHandler = require('./trainHandler');
-const hotelOptions = require('./hotel');
+const hotelOptions = require('./hello.js');
 const stationcodes=require('./test.js');
 const axios = require('axios');
 const fs = require('fs');
@@ -155,17 +155,17 @@ app.post('/train', async (req, res) => {
 });
 
 app.post('/hotel', async (req, res) => {
-    try {
-        console.log(req.headers);
-        const locationName = req.headers.location;
-        const arrivalDate = req.headers.arrival_date;
-        const departureDate = req.headers.departure_date;
-        const hotelData = await hotelOptions.fetchHotelData(locationName, arrivalDate, departureDate);
-        return res.status(200).json(hotelData);
-    } catch (err) {
-        console.error(err);
-        return res.status(500).send('Internal Server Error');
-    }
+  try {
+    const locationName = req.headers.location;
+    const arrivalDate = req.headers.arrival_date;
+    const departureDate = req.headers.departure_date;
+
+    const hotelData = await hotelOptions.fetchHotelData(locationName, arrivalDate, departureDate);
+    return res.status(200).json(hotelData);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send('Internal Server Error');
+  }
 });
 
 app.post('/traindetails', async (req, res) => {

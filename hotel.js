@@ -1,12 +1,9 @@
 const axios = require('axios');
-const latlong = require('./latlong'); // Use require instead of request
+const latlong = require('./latlong');
 
-const fetchHotelData = async (locationName,arrivalDate,departureDate) => {
+const fetchHotelData = async (locationName, arrivalDate, departureDate) => {
   try {
     const locationDetails = await latlong.getLocationDetails(locationName);
-
-    // Get arrival_date and departure_date from the request headers
-    
 
     const options = {
       method: 'GET',
@@ -16,24 +13,21 @@ const fetchHotelData = async (locationName,arrivalDate,departureDate) => {
         longitude: locationDetails.lng,
         arrival_date: arrivalDate,
         departure_date: departureDate,
-        adults: '1',
-        children_age: '0,17',
+        adults: '2', // Adjusted to '2' adults
+        children_age: '0',
         room_qty: '1',
         languagecode: 'en-us',
-        currency_code: 'EUR'
+        currency_code: 'INR', // Adjusted to 'INR'
       },
       headers: {
-        'X-RapidAPI-Key': '74a10f177emsh9fedb666587660fp12cd30jsn3145991e3f11', // Replace with your actual key
-        'X-RapidAPI-Host': 'booking-com15.p.rapidapi.com'
-      }
+        'X-RapidAPI-Key': '1bfa42aa46mshd8174ea1fc822dfp13e806jsn163263fc73b1', // Replace with your actual key
+        'X-RapidAPI-Host': 'booking-com15.p.rapidapi.com',
+      },
     };
 
     const response = await axios.request(options);
-
-    // Accessing properties from the JSON response
     const hotels = response.data.data.result;
 
-    // Create an array to store hotel details
     const hotelDetails = hotels.map(hotel => ({
       hotel_id: hotel.hotel_id,
       hotel_name: hotel.hotel_name,
