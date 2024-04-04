@@ -32,9 +32,7 @@ Your feedback is valuable! If you have any suggestions, encounter issues, or wan
 
 If you have any questions or inquiries about the project, feel free to reach out to me via email at [sachinram2509@gmail.com](mailto:sachinram2509@gmail.com) or connect with me on [LinkedIn](www.linkedin.com/in/sachin-ram-94418a226).
 
-## Acknowledgements
-
-I would like to express my gratitude to [] for their support and contributions to this project.
 
 Thank you for visiting the Innovate X Travel Recommendor Bot repository!
 
+### Happy Travels With InnovateX.
