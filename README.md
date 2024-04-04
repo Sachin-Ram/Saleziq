@@ -18,12 +18,11 @@
 - Node.js
 - Express.js
 - Deluge
-- Other relevant technologies for chatbot development
-- APIs (Specify the APIs used)
+- APIs 
 
 ## Collaborator
 
-- Collaborator Name: [Collaborator Name](https://github.com/collaborator)
+- Collaborator Name: [Ajay Kumar](https://github.com/Tazified)
 
 ## Feedback
 
@@ -31,11 +30,11 @@ Your feedback is valuable! If you have any suggestions, encounter issues, or wan
 
 ## Contact Me
 
-If you have any questions or inquiries about the project, feel free to reach out to me via email at [your@email.com](mailto:your@email.com) or connect with me on [LinkedIn](https://www.linkedin.com/in/yourlinkedin).
+If you have any questions or inquiries about the project, feel free to reach out to me via email at [sachinram2509@gmail.com](mailto:sachinram2509@gmail.com) or connect with me on [LinkedIn](www.linkedin.com/in/sachin-ram-94418a226).
 
 ## Acknowledgements
 
-I would like to express my gratitude to [mention any collaborators or organizations] for their support and contributions to this project.
+I would like to express my gratitude to [] for their support and contributions to this project.
 
 Thank you for visiting the Innovate X Travel Recommendor Bot repository!
 
