@@ -22,7 +22,7 @@
 
 ## Collaborator
 
-- Collaborator Name: [Ajay Kumar](https://github.com/Tazified)
+- Collaborator Name: [Sachin Ram]([https://github.com/Sachin-Ram])
 
 ## Feedback
 
