@@ -8,7 +8,7 @@ const options = {
     language: 'en'
   },
   headers: {
-    'X-RapidAPI-Key': '1fbcf9b118msh84d98293e865e42p1037e2jsn3f13e701b396',
+    'X-RapidAPI-Key': '',
     'X-RapidAPI-Host': 'trueway-geocoding.p.rapidapi.com'
   }
 };

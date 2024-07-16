@@ -8,7 +8,7 @@ const hotelOptions = require('./hotel.js');
 const stationcodes=require('./test.js');
 const axios = require('axios');
 const fs = require('fs');
-const trainService=require('./trainfetch.js');
+const trainService=require('./Apis/trainfetch.js');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -77,12 +77,12 @@ const fetchData = async (locationName, spot) => {
     });
 
     const results = await fetch(
-      `https://api.foursquare.com/v3/places/search?${searchParams}`,
+      ``,
       {
         method: 'GET',
         headers: {
           Accept: 'application/json',
-          Authorization: 'fsq3yWpaif7kLKFP+/GhiMQcnEIAyBRCUw/6LhMTnJBYNSk=',
+          Authorization: '',
         }
       }
     );
@@ -100,7 +100,7 @@ const fetchData = async (locationName, spot) => {
 
 const fetchDetails = async (fsqId) => {
   try {
-    sdk.auth('fsq3yWpaif7kLKFP+/GhiMQcnEIAyBRCUw/6LhMTnJBYNSk=');
+    sdk.auth('');
     const placeDetails = await sdk.placeDetails({ fsq_id: fsqId });
     return {
       name: placeDetails.data.name,

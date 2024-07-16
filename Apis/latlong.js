@@ -9,7 +9,7 @@ const getLocationDetails = async (locationName) => {
       language: 'en'
     },
     headers: {
-      'X-RapidAPI-Key': '74a10f177emsh9fedb666587660fp12cd30jsn3145991e3f11',
+      'X-RapidAPI-Key': '',//replace with original api key
       'X-RapidAPI-Host': 'trueway-geocoding.p.rapidapi.com'
     }
   };
