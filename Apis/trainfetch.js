@@ -11,7 +11,7 @@ const fetchTrainDetails = async (fromstationCode1, tostationCode2, dateOfJourney
         dateOfJourney: dateOfJourney
       },
       headers: {
-        'X-RapidAPI-Key': '1bfa42aa46mshd8174ea1fc822dfp13e806jsn163263fc73b1',
+        'X-RapidAPI-Key': '',
         'X-RapidAPI-Host': 'irctc1.p.rapidapi.com'
       }
     };

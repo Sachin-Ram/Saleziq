@@ -7,7 +7,7 @@ const fetchHotelData = async (locationName, arrivalDate, departureDate) => {
 
     const options = {
       method: 'GET',
-      url: 'https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotelsByCoordinates',
+      url: '',
       params: {
         latitude: locationDetails.lat,
         longitude: locationDetails.lng,
@@ -20,8 +20,8 @@ const fetchHotelData = async (locationName, arrivalDate, departureDate) => {
         currency_code: 'INR', // Adjusted to 'INR'
       },
       headers: {
-        'X-RapidAPI-Key': '1bfa42aa46mshd8174ea1fc822dfp13e806jsn163263fc73b1', // Replace with your actual key
-        'X-RapidAPI-Host': 'booking-com15.p.rapidapi.com',
+        'X-RapidAPI-Key': '', // Replace with your actual key
+        'X-RapidAPI-Host': '',
       },
     };
 
